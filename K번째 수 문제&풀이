@@ -1,0 +1,70 @@
+< 11004번 문제 >
+
+문제
+수 N개 A1, A2, ..., AN이 주어진다. A를 오름차순 정렬했을 때, 앞에서부터 K번째 있는 수를 구하는 프로그램을 작성하시오.
+
+입력
+첫째 줄에 N(1 ≤ N ≤ 5,000,000)과 K (1 ≤ K ≤ N)이 주어진다.
+
+둘째에는 A1, A2, ..., AN이 주어진다. (-109 ≤ Ai ≤ 109)
+
+출력
+A를 정렬했을 때, 앞에서부터 K번째 있는 수를 출력한다.
+
+< 예제 입력 1 >
+5 2
+4 1 2 3 5
+
+< 예제 출력 1 > 
+2
+
+
+< 문제풀이 >
+- 데이터의 개수가 최대 5,000,000개임
+- 시간복잡도 O(NlogN)의 정렬 알고리즘을 이용해야함
+- 고급 정렬 알고리즘 ( 병합, 퀵, 힙 정렬 등) 이용가능
+- 파이썬의 기본 정렬 라이브러리 가능
+
+** 병합정렬 이용
+def merge_sort(array):
+    if len(array)<=1:
+        return array
+    mid = len(array)//2
+    left = merge_sort(array[:mid])
+    right = merge_sort(array[mid:])
+    i,j,k = 0,0,0
+    while i <len(left) and j<len(right):
+        if left[i]<right[j]:
+            array[k]=left[i]
+            i+=1
+        else:
+            array[k]=right[j]
+            j+=1
+        k+=1
+    if i==len(left):
+        while j<len(right):
+            array[k]=right[j]
+            j+=1
+            k+=1
+    elif j==len(right):
+        while i<len(left):
+            array[k]=left[i]
+            i+=1
+            k+=1
+    return array
+
+n,k = map(int,input().split())
+array = list(map(int,input().split()))
+
+array = merge_sort(array)
+
+print(array[k-1])
+    
+** 파이썬 라이브러리 이용
+
+n,k = map(int,input().split())
+array = list(map(int,input().split()))
+
+array=sorted(array)
+
+print(array[k-1])
