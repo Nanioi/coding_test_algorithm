@@ -30,7 +30,7 @@ M개의 줄에 답을 출력한다. 존재하면 1을, 존재하지 않으면 0�
 - dictionary 자료형을 해시처럼 사용가능
 - set 자료형을 이용해 간단히 풀 수 있음
 
-
+**set사용
 n = int(input())
 array = set(map(int,input().split()))
 m = int(input())
@@ -41,3 +41,12 @@ for i in x:
         print('0')
     else:
         print('1')
+        
+        
+**dictionary 사용
+n,A = int(input()) , {i: 1 for i in map(int,input().split())}
+m = int(input())
+for i in list(map(int,input().split())) :
+    print(A.get(i,0))
+    
+    == print( 1 if i in A else 0 )
