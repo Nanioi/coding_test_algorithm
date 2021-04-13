@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/nayeon/Desktop/알고리즘/나연알고코드/13주차_최소신장트리/2/main.cpp
+stdio.h
+-
+stdlib.h
+-
+limits.h
+-
+

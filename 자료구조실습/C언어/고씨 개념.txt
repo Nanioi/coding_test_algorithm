@@ -1,0 +1,390 @@
+어떤 정수 n을 이진수로 표기했을 때, 오른쪽 10번째 자리의 비트값 출력
+
+----> int x=0x71234567;
+
+x=x>>10;----->가장 오른쪽으로 위치 시킨후
+
+x=x&1; 
+
+printf("%d",x);
+
+<재귀함수>
+10까지 합구하기
+
+int sum(int n){
+int s; // 합 저장
+if( n == 1) s = 1;
+else s = sum(n-1) + n;
+return s;
+}
+
+int sum(int n){
+if( n == 1) return 1;
+return sum(n-1) + n;
+}
+
+
+void main()
+{
+printf("%d", sum(10) );
+
+<매크로 함수>
+ex)
+#include <stdio.h>
+#define LENGTH 50
+#define EQ ==
+#define STRING unsigned int
+#define END "프로그램 종료"
+int main()
+{
+	int i, x = 0;
+	STRING table[LENGTH];
+	if (x EQ 0)
+	{
+		for (i=0; i<LENGTH; i++)
+		table[i] = i+1;
+		printf(END);
+	}
+	return 0;
+}
+
+매크로 상수 사용 시 주의사항
+? 라인 끝에 세미콜론(;) 붙이지 않음
+? 매크로이름도 명칭규칙에 맞게 작성해야 함
+? 중간에 공백이 들어가면 안 됨
+? 숫자로 시작하면 안 됨
+? 다른 이름들과 일치해도 안 됨
+? 매크로는 중첩이 가능
+? 단, 순서를 지켜야 함
+? X가 Y보다 먼저 매크로 상수로 정의되어 있어야 함
+? 값을 가지지 않는 빈 매크로 정의가 가능
+? 형식: #define 매크로이름
+? 예) #define EMPTY
+? 매크로 상수 자체만 존재
+? 주로 조건부 컴파일 지시자와 함께 사용
+? 해당 매크로 상수의 존재 여부에 대한 의미만 가짐
+
+매크로 해제---->#undef 매크로이름
+
+<조건부 컴파일>
+
+#if 조건식/매크로이름
+컴파일 할 문장 1
+#else
+컴파일 할 문장 2
+#endif
+
+---->
+조건식/매크로이름이 참이면 ? 컴파일 할 문장 1이 컴파일 됨
+? 조건식/매크로이름이 거짓이면 ? 컴파일 할 문장 2가 컴파일 됨
+
+----<주의>-------
+1. 실수 상수, 문자열 상수, 변수 등을 사용할 수 없음
+2. 관계연산자, 논리연산자, 사칙연산 사용 가능
+예) #if SYS == 3.24 (X), #if PL == “Python” (X) 등…
+
+사용예시1)
+
+#define TESTING 1
+void MyFunc();
+#if TESTING
+void main()
+{
+	MyFunc();
+}
+#endif
+void MyFunc()
+{ ……… }
+
+사용예시2)
+
+#include <stdio.h>
+#define LEVEL 1
+#if LEVEL == 1
+#include "beginner.h"
+#elif LEVEL == 2
+#include "intermediate.h"
+#elif LEVEL == 3
+#include "expert.h"
+#else
+#include "general.h"
+#endif
+
+< ifdef = if define >
+---> 매크로가 정의되어 있을 때에만 컴파일을 수행
+? #if와는 달리 매크로이름만 사용될 수 있음
+?
+------<사용 형태>--------
+
+#ifdef 매크로이름
+	컴파일 할 문장 1
+#else	
+	컴파일 할 문장 2
+#endif
+----------------------------
+? 매크로이름이 프로그램 내에서 정의되어 있다면,
+? 컴파일 할 문장 1이 컴파일
+? 그렇지 않을 경우 컴파일 할 문장 2가 컴파일
+
+< ifndef>
+----> 위와 반대
+
+#include <stdio.h>
+
+#ifndef PI
+	#define PI 3.14
+#endif
+
+int main()
+{
+	printf("%f\n", PI*5.4);
+	return 0;
+}
+
+<const 상수화>
+int * p 
+-> 비상수 포인터 (값 변경 가능)
+const int *p=&n1 
+-> 비상수 포인터 (주소 변경 가능, 값 변경 x)----->*p=20;(X), n1=1;(O)
+int * const p=&n1
+-> 상수 포인터 (주소 변경 불가능, 값 변경 o)---->p=&n2;(X)
+const int * const p
+-> 상수 포인터 (값, 주소 변경 불가능)
+
+<분할 컴파일>
+Project1이라는 이름으로 프로젝트 생성후 
+소스파일들을 분할 후 
+실행할땐  BUILD에 Build Project1 을 눌러 전체를 빌드시킨다.
+
+---------<주의>----------
+하나의 파일을 여러 개의 파일로 분할 시, 주의사항
+? 각 파일 내에서 사용하는 변수나 함수 등은 해당 파일 내에서
+선언되어야 함
+? 각 파일은 독립적으로 컴파일됨
+? 컴파일러와 전처리기는 파일 단위로 컴파일과 전처리를 진행
+? 만약, 다른 파일에서 선언 및 정의된 변수나 함수 등을 사용하고
+싶다면?
+? 해당 컴파일러에게 어떤 변수와 함수가 외부 파일에서 선언 및
+정의 된 변수나 함수인지를 알려주면 됨
+? extern 선언을 사용
+? 헤더파일 이용
+
+1) extern 선언
+
+<main함수>
+
+#include <stdio.h>
+void counter();
+int num = 1;
+int main()
+{
+	printf("1. main.c: %d\n", num);
+	counter();
+	printf("2. main.c: %d\n", num);
+	return 0;
+}
+
+<counter>
+#include <stdio.h>
+extern int num;
+void counter()
+{
+	num++;
+	printf("counter.c: %d\n", num);
+}
+
+2)static지역변수
+-전역변수의 성격을 지니는 변수가 됨 (데이터 영역에서 메모리를
+할당 받음)
+
+-함수 내에 선언된 지역변수에 static 선언을 하게 되면…
+?> 선언된 함수 내에서만 접근이 가능함 (지역변수 특성 유지)
+?> 딱 한 번 초기화되고, 프로그램 종료 시까지 메모리 공간에
+     존재함 (전역변수 특성 추가)
+#include <stdio.h>
+#define SIZE 6
+void Func();
+int main()
+{
+	int i;
+	for (i=0; i<SIZE; i++)
+	Func();
+	return 0;
+}
+void Func()
+{
+	static int cnt1 = 0;
+	int cnt2 = 0;
+	cnt1++;
+	cnt2++;
+	printf("static:%d local:%d \n", cnt1, cnt2);
+}
+----->cnt1은 계속 +1
+----->cnt2는 함수호출할 때마다 0으로 초기화되므로 계속 1
+ 
+3) static 전역변수/함수
+
+>>변수/함수를 선언한 파일 내에서만 한정해서 사용함을 의미
+>>해당 변수/함수는 외부 파일에서의 접근을 허용하지 않음
+>>접근 범위를 파일 내부로 제한하는 경우에 사용됨
+
+<main.c>
+
+#include <stdio.h>
+extern int eval(int n);
+
+int main()
+{
+	printf("%d\n", eval(5));
+	return 0;
+}
+
+<func.c>
+static int f(int x)
+{
+	return x*4+3;
+}
+int eval(int n)
+{
+	return 3*f(n);
+}
+
+조건부 컴파일을 사용하여 헤더파일 중복삽입 문제 해결법
+? #ifndef ~ #endif 이용
+? 각 헤더파일마다 #ifndef ~ #endif 이용해서 중복삽입 문제를
+미연에 방지하는 것이 좋음
+? 형식
+#ifndef 헤더파일명
+#define 헤더파일명
+extern int num;
+void print(int x);
+…
+#endif
+
+-----------<예시>------------
+<myheader.h>
+#ifndef __MYHEADER_H__
+#define __MYHEADER_H__
+#include <stdio.h>
+#define SIZE 3
+
+struct student{
+	int id;
+	double score;
+};
+extern struct student st[SIZE];
+#endif
+
+<myfunc.h>
+#ifndef __MYFUNC_H__
+#define __MYFUNC_H__
+#include "myheader.h"
+void eval(struct student *st1);
+#endif
+
+
+
+---> 오제이 고급 문법 실습 문제 보기
+
+
+
+<라이브러리 활용- 난수>
+
+#include <stdio.h>
+#include <stdlib.h> // rand 함수 사용을 위해
+void main()
+{ int i;
+srand(10); // 시드를 10으로 지정
+for( i=0 ; i < 5 ; ++i) // 5개의 난수 생성
+printf(" %d", rand() );
+}
+결과:
+71 16899 3272 13694 13697
+
+
+#include <stdio.h>
+#include <stdlib.h> // rand 함수 사용을 위해
+#include <time.h> // time 함수 사용을 위해
+void main()
+{ int i;
+srand( time(NULL) ); // 시드를 현재시간으로 지정
+for( i=0 ; i < 5 ; ++i) // 5개의 난수 생성
+printf(" %d", rand() );
+}
+결과: 실행할 때 마다 달라짐
+
+ [min, max) 사이의 난수 하나를 생성하는 함수
+
+#include <stdio.h>
+#include <stdlib.h> // rand 함수 사용을 위해
+#include <time.h> // time 함수 사용을 위해
+int random_num(int min, int max)
+{
+int rand_num;
+rand_num =
+(double) rand() / (RAND_MAX +1) * (max-min) + min;
+return rand_num;
+}
+
+전형적인 실행 시간 측정 코드
+
+#include <stdio.h>
+#include <time.h>
+void main( void )
+{ clock_t start, finish;
+double duration;
+start = clock(); // 시작 시각
+// 수행시간을 측정하고 하는 코드….
+finish = clock(); // 종료 시각
+duration = (double)(finish-start) / CLOCKS_PER_SEC;
+printf("실행 시간: %lf 초\n", duration); 
+
+<다중 포인터>
+
+int i = 10, *pi, **ppi, ***pppi, ****ppppi;
+pi = &i //(int)형인 i의 주소는 (int *)형
+ppi = &pi; //(int *)형인 pi의 주소는 (int **)형
+pppi = &ppi; //(int **)형인 ppi의 주소는 (int ***)형
+ppppi = &pppi; //(int ***)형인 pppi의 주소는 (int ****)형
+printf("%d %d %d %d %d\n", ****ppppi, ***pppi, **ppi, *pi, i);
+
+<2차원배열을 함수의 인자로 전달>
+
+void init(int x[][3]){ // int (*x)[3]과 동일
+x[0][0] = x[1][0] = 0;
+}
+void main(){
+int b[2][3]={{-2,4,0},{1,2,3}};
+init(b);
+printf("%d %d %d\n",b[0][0],b[0][1],b[0][2]);
+printf("%d %d %d\n",b[1][0],b[1][1],b[1][2]);
+}
+
+int ar[5]={2, 3, 5, 7, -1}, *p = ar;
+int (*px)[5] = &ar;
+printf("%p %p %p\n", p, p+1, p+2); // 4씩 증가
+printf("%p %p %p\n", px, px+1, px+2); // 20씩 증가
+
+int b[3][5];
+
+b의 자료형 --> int (*)[5] == &b[2]의 자료형 
+
+&b의 자료형 --> int (*)[3][5] == int [5] 에대한 크기가 3인 배열을 가르키는 포인터
+(== 3*5 인 2차원배열을 가르키는 포인터)
+
+int b[3][5];
+int *p; // int 포인터
+p = &b[1][3];
+p = b[2];
+p = &b[2]; // 경고 or 오류
+p = b; // 경고 or 오류
+p = &b; // 경고 or 오류
+
+int b[3][5];
+int *p, (*px)[5], (*py)[3][5];
+p = &b[1][3];
+p = b[2];
+px = &b[2];
+px = b;
+py = &b;
+
