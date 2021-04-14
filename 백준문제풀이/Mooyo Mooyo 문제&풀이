@@ -1,0 +1,140 @@
+16768번 문제
+
+문제
+With plenty of free time on their hands (or rather, hooves), the cows on Farmer John's farm often pass the time by playing video games. One of their favorites is based on a popular human video game called Puyo Puyo; the cow version is of course called Mooyo Mooyo.
+
+The game of Mooyo Mooyo is played on a tall narrow grid  cells tall () and 10 cells wide. Here is an example with :
+
+0000000000
+0000000300
+0054000300
+1054502230
+2211122220
+1111111223
+Each cell is either empty (indicated by a 0), or a haybale in one of nine different colors (indicated by characters 1..9). Gravity causes haybales to fall downward, so there is never a 0 cell below a haybale.
+
+Two cells belong to the same connected region if they are directly adjacent either horizontally or vertically, and they have the same nonzero color. Any time a connected region exists with at least  cells, its haybales all disappear, turning into zeros. If multiple such connected regions exist at the same time, they all disappear simultaneously. Afterwards, gravity might cause haybales to fall downward to fill some of the resulting cells that became zeros. In the resulting configuration, there may again be connected regions of size at least  cells. If so, they also disappear (simultaneously, if there are multiple such regions), then gravity pulls the remaining cells downward, and the process repeats until no connected regions of size at least  exist.
+
+Given the state of a Mooyo Mooyo board, please output a final picture of the board after these operations have occurred.
+
+입력
+The first line of input contains  and  (). The remaining  lines specify the initial state of the board.
+
+출력
+Please output  lines, describing a picture of the final board state.
+
+
+예제 입력 1 
+6 3
+0000000000
+0000000300
+0054000300
+1054502230
+2211122220
+1111111223
+
+예제 출력 1 
+0000000000
+0000000000
+0000000000
+0000000000
+1054000000
+2254500000
+
+힌트
+In the example above, if , then there is a connected region of size at least  with color 1 and also one with color 2. Once these are simultaneously removed, the board temporarily looks like this:
+
+0000000000
+0000000300
+0054000300
+1054500030
+2200000000
+0000000003
+Then, gravity takes effect and the haybales drop to this configuration:
+
+0000000000
+0000000000
+0000000000
+0000000000
+1054000300
+2254500333
+Again, there is a region of size at least  (with color 3). Removing it yields the final board configuration:
+
+0000000000
+0000000000
+0000000000
+0000000000
+1054000000
+2254500000
+
+< 문제풀이 >
+
+=> 무요무요들이 특정 K개가 넘으면 터짐, 그룹들 멤버갯수가 K이상인 것들 터지고 아래로 내려옴
+
+# import sys
+# sys.setrecursionlimit(10000)
+
+def new_array(n):
+    return [[False for i in range(10)] for _ in range(n)]
+
+n,k = map(int,input().split())
+m=[list(input()) for _ in range(n)]
+
+ck = new_array(n)
+ck2 = new_array(n)
+
+dx,dy=[0,1,0,-1],[1,0,-1,0]
+
+def dfs(x,y):
+    ck[x][y]=True
+    ret=1
+    for i in range(4):
+        xx,yy = x + dx[i], y + dy[i]
+        if xx<0 or xx>=n or yy<0 or yy>=10:
+            continue
+        if ck[xx][yy] or m[x][y] != m[xx][yy]:
+            continue
+        ret += dfs(xx,yy)
+    return ret
+        
+def dfs2(x,y,val):
+    ck2[x][y] = True
+    m[x][y]='0'
+    for i in range(4):   
+        xx,yy = x+dx[i],y+dy[i]
+        if xx<0 or xx>=n or yy<0 or yy>=10:   
+            continue
+        if ck2[xx][yy] or m[x][y] != val:
+            continue
+        dfs2(xx,yy,val) 
+    
+def down():
+    for i in range(10):
+        tmp=[]
+        for j in range(n):
+            if m[j][i]!='0':
+                tmp.append(m[j][i])
+        for j in range(n-len(tmp)):
+            m[j][i]='0'
+        for j in range(n-len(tmp),n):
+            m[j][i]=tmp[j-(n-len(tmp))]
+
+
+while True:
+    exist = False
+    ck = new_array(n)
+    ck2=new_array(n)
+    for i in range(n):
+        for j in range(10):
+            if m[i][j] =='0' or ck[i][j]:
+                continue
+            res = dfs(i,j)#개수세기
+            if res >= k:
+                dfs2(i,j,m[i][j])#지우기
+                exist = True
+    if not exist:
+        break
+    down()#내리기
+
+for i in m:
+    print(''.join(i))
