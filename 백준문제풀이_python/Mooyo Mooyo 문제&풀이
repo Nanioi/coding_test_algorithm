@@ -104,7 +104,7 @@ def dfs2(x,y,val):
         xx,yy = x+dx[i],y+dy[i]
         if xx<0 or xx>=n or yy<0 or yy>=10:   
             continue
-        if ck2[xx][yy] or m[x][y] != val:
+        if ck2[xx][yy] or m[xx][yy] != val:
             continue
         dfs2(xx,yy,val) 
     
