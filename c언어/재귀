@@ -1,0 +1,104 @@
+1. 최소공배수 구하기 
+
+#include <stdio.h>
+
+int gcd(int a,int b){
+
+    if(b==0)
+        return a;
+    else{
+        gcd(b,a%b);
+    }
+}
+
+int main(){
+
+    int n,m;
+    
+    scanf("%d %d",&n,&m);
+    
+    print("%d",gcd(n,m));
+    
+}
+
+
+2. 하노이탑
+
+원반 n개를 A -> C 원반으로 옮길 경우
+
+1. 작은 원반 n-1개를 B원반으로 옮긴다. 
+2. n번째 큰 원반을 C로 옮긴다. 
+3. B원반 n-1개 원반을 C로 옮긴다. 
+
+from, by,to
+
+#include <stdio.h>
+
+void hanoi(int n, char a, char b, char c){
+
+    if(n==1){
+        print("원반 1을 %c -> %c 로 이동\n",a,c);
+    }else{
+    
+        // A -> B   
+        hanoi(n-1,a, c, b)
+        // n원반 A->C로      
+        print("원반 %d을 %c -> %c 로 이동\n",n,a,c);
+        // B -> C
+        hanoi(n-1,b,a,c)
+    }
+}
+int main(){
+
+     int n;
+     scanf("%d",&n);
+     
+     hanoi(n,'A','B','C');
+}
+
+3. 배열 A에서 최대값 찾기
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int max(int a,int b){
+    if(a>b)
+        return a;
+    else
+        return b;
+}
+
+// a 배열에서 크기가 n까지 최대값
+int max_a ( int *a, int n){
+    if(n==1)
+        return a[0];
+    else{
+        return max(a[n-1],max_a(a,n-1));
+}
+
+int main(){
+    int n,*a;
+    scanf("%d",&n);
+    a=(int *)malloc(sizeof(int)*n);
+    
+    for(int i=0;i<n;i++){
+        scanf("%d",&a[i])
+    }
+    print("%d",max_a(a,n));
+}
+
+4. n까지 합
+
+int add(int n){
+    if (n==1)
+        return 1;
+    else
+        return n+add(n-1);
+}
+int main(){
+    int n;
+    
+    scanf("%d",&n);
+    
+    printf("%d",add(n));
+};
