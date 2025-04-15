@@ -28,4 +28,4 @@ list의 요소가 n개 있는 경우
 예: a, b = b, a는 내부적으로 temp 변수 써서 3번 움직임
 장점: 코드가 직관적이고 간단함
 
-블로그 ) https://blog.naver.com/PostView.naver?blogId=dancing_nani&logNo=223834219497&categoryNo=87&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postView&userTopListOpen=true&userTopListCount=5&userTopListManageOpen=false&userTopListCurrentPage=1
+블로그 ) https://blog.naver.com/dancing_nani/223834219497

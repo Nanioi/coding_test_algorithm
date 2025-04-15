@@ -15,4 +15,4 @@ list의 요소가 n개 있는 경우
 : 최악의 경우 n*(n-1) / 2
 : 최선의 경우 O(n) - 완전 정렬이 되어있는 경우
 
-블로그 ) https://blog.naver.com/PostView.naver?blogId=dancing_nani&logNo=223834078274&categoryNo=87&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postView&userTopListOpen=true&userTopListCount=5&userTopListManageOpen=false&userTopListCurrentPage=1
+블로그 ) https://blog.naver.com/dancing_nani/223834078274
