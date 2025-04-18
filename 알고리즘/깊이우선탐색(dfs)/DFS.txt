@@ -1,0 +1,21 @@
+DFS 
+- 깊이 우선 탐색 
+- 정점의 자식들을 먼저 탐색하는 방식 
+- 백트래킹, 경로탐색, 순열/조합 문제 등에 많이 쓰임 
+- 스택/ 재귀함수를 사용하여 구현
+
+
+visited - queue, 
+need_visit - stack 으로 구현 
+
+
+* Stack 으로 구현 시 순서 
+
+1. 맨 처음 노드 -> need_visit에 넣기 
+2. need_visit에서 마지막 요소 뽑아 visit에 있는지 확인
+3. 없으면 visited에 넣기
+4. 해당 요소와 연결된 노드들 need_visit에 넣기 
+
+1 -> 2-> 3-> 4 -> 2 -> 3 -> 4 -> 2 -> ... 반복 
+
+블로그 ) https://blog.naver.com/dancing_nani/223836414990
